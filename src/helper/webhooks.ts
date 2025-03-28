@@ -49,11 +49,10 @@ async function verificarConsumoVouchers(vouchers: any[]): Promise<boolean> {
   );
 }
 
-async function verifyWhatsBonusExists(id: number) {
+async function verifyWhatsBonusExists(id: number): Promise<boolean> {
   const vouchers = await searchVoucher(id);
-  return vouchers.some((voucher: Voucher) => {
-    voucher.id_dominio === 646;
-  });
+
+  return vouchers.some((voucher: Voucher) => voucher.id_dominio === 646);
 }
 
 function verifyMessageDataType(messageData: any) {
