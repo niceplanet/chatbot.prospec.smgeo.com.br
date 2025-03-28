@@ -49,11 +49,10 @@ async function verificarConsumoVouchers(vouchers: any[]): Promise<boolean> {
   );
 }
 
-async function verifyWhatsBonusExists(id: number) {
+async function verifyWhatsBonusExists(id: number): Promise<boolean> {
   const vouchers = await searchVoucher(id);
-  return vouchers.some((voucher: Voucher) => {
-    voucher.id_dominio === 646;
-  });
+
+  return vouchers.some((voucher: Voucher) => voucher.id_dominio === 646);
 }
 
 function verifyMessageDataType(messageData: any) {
@@ -70,7 +69,7 @@ function verifyMessageDataType(messageData: any) {
 async function userCpfExists(cpf: string) {
   try {
     const res = await getUserByCpf(cpf);
-    if (res.code === 400) {
+    if (res?.code === 400) {
       return false;
     }
     return true;

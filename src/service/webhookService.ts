@@ -83,8 +83,9 @@ export async function startConversation(body: any) {
                 userByPhone?.id
               );
 
-              if (await verifyWhatsBonusExists(userByPhone?.id)) {
+              if (!(await verifyWhatsBonusExists(userByPhone?.id))) {
                 await createVouchersWhatsappBonus(userByPhone?.id);
+                id_voucher = 646;
                 await sendWhatsAppMessage(
                   senderId,
                   `Olá ${userByPhone?.name}, estou lhe concedendo 2 vales bônus para analisar suas propriedades ou propriedades de seu interesse!`
@@ -187,6 +188,7 @@ export async function startConversation(body: any) {
             await createUser(message.body, senderId, session.cpf)
               .then(async (res) => {
                 session = { ...session, name: message.body, user_id: res.id };
+                id_voucher = 646;
                 await sendWhatsAppInteractiveMessage(
                   senderId,
                   "Seu cadastro foi finalizado! 🎉 É um prazer tê-lo conosco. Você ganhou 2 vales para realizar suas análises. Vamos começar uma análise?",
