@@ -4,12 +4,9 @@ export async function VerifyNumberExists(number: string) {
   try {
     const response = await api.get(`chatbot/usuario/buscaTelefone/${number}`);
 
-    if (response.data.msg.telefone === number) {
-      return true;
-    }
-    return false;
-  } catch (error) {
-    console.error(error);
+    return response.data.msg;
+  } catch (error: any) {
+    console.error(error.response.data);
   }
 }
 
@@ -22,8 +19,8 @@ export async function searchUserByPhone(number: string) {
       name: response.data.msg.nome,
       cpf: response.data.msg.cpf,
     };
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response.data);
   }
 }
 
@@ -81,6 +78,16 @@ export async function createUser(name: string, phone: string, cpf: string) {
       usuario_cadastro: "1",
     });
     return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getUserByCpf(cpf: string) {
+  try {
+    const response = await api.get(`chatbot/usuario/buscaCpf/${cpf}`);
+
+    return response.data.msg;
   } catch (error) {
     console.error(error);
   }
