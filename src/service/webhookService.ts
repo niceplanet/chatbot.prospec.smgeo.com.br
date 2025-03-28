@@ -187,6 +187,7 @@ export async function startConversation(body: any) {
             await createUser(message.body, senderId, session.cpf)
               .then(async (res) => {
                 session = { ...session, name: message.body, user_id: res.id };
+                id_voucher = 646;
                 await sendWhatsAppInteractiveMessage(
                   senderId,
                   "Seu cadastro foi finalizado! 🎉 É um prazer tê-lo conosco. Você ganhou 2 vales para realizar suas análises. Vamos começar uma análise?",
