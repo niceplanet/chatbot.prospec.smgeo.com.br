@@ -23,8 +23,10 @@ import {
   getAllVouchers,
   getDesabilitadosDoDominio,
   isWhatsAppBonusVoucherEmpty,
+  userCpfExists,
   verificarConsumoVouchers,
   verifyMessageDataType,
+  verifyUserByPhone,
   verifyWhatsBonusExists,
 } from "../helper/webhooks";
 
@@ -49,7 +51,7 @@ export async function startConversation(body: any) {
               senderId,
               "Olá! 🌿 Bem-vindo ao Chatbot NIA! Aqui você pode realizar análises socioambientais de propriedades e fazendas fornecedoras de animais. Estou aqui para te ajudar nesse processo. 😊"
             );
-            if (!(await VerifyNumberExists(senderId))) {
+            if (!(await verifyUserByPhone(senderId))) {
               await sendWhatsAppMessage(
                 senderId,
                 "Não consegui te localizar em nossos usuários. Mas não tem problema, por gentileza me informe seu nome e CPF abaixo para ganhar 3 vales bônus! Lembrando que você poderá utilizar-lo pelo aplicativo prospec ou por aqui mesmo."
@@ -153,6 +155,21 @@ export async function startConversation(body: any) {
                 senderId,
                 "CPF inválido, por favor, informe um CPF válido."
               );
+              break;
+            }
+            if (await userCpfExists(message.body)) {
+              await sendWhatsAppMessage(
+                senderId,
+                "Notamos que você já possui um cadastro conosco. Por favor, entre no aplicativo ou entre em contato com o suporte, para atualizar seu numero de telefone."
+              );
+
+              await sendWhatsAppImage(
+                senderId,
+                "https://github.com/user-attachments/assets/a3977226-20e7-42bc-b590-d2e584c32675",
+                "Acesse o aplicativo Prospec!"
+              );
+
+              await saveSession(senderId, "start");
               break;
             }
             await sendWhatsAppMessage(
