@@ -329,6 +329,7 @@ export async function startConversation(body: any) {
     }
     return;
   } catch (error) {
+    console.error(error);
     await sendWhatsAppMessage(
       body.entry[0].changes[0].value.messages[0].from,
       "Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente."
