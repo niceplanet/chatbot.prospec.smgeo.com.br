@@ -70,7 +70,7 @@ function verifyMessageDataType(messageData: any) {
 async function userCpfExists(cpf: string) {
   try {
     const res = await getUserByCpf(cpf);
-    if (res.code === 400) {
+    if (res?.code === 400) {
       return false;
     }
     return true;
