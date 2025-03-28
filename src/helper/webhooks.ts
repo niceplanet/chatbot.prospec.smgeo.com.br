@@ -1,5 +1,9 @@
 import { Voucher } from "../interface/voucher";
-import { searchVoucher } from "../repository/prospecRepository";
+import {
+  getUserByCpf,
+  searchVoucher,
+  VerifyNumberExists,
+} from "../repository/prospecRepository";
 
 async function getDesabilitadosDoDominio(dominio: number, vouchers: Voucher[]) {
   const dom = vouchers.find((item) => item.id_dominio === dominio);
@@ -63,6 +67,30 @@ function verifyMessageDataType(messageData: any) {
   }
 }
 
+async function userCpfExists(cpf: string) {
+  try {
+    const res = await getUserByCpf(cpf);
+    if (res.code === 400) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function verifyUserByPhone(number: string) {
+  try {
+    const res = await VerifyNumberExists(number);
+    if (res?.telefone === number) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export {
   getDesabilitadosDoDominio,
   getAllVouchers,
@@ -70,4 +98,6 @@ export {
   verificarConsumoVouchers,
   verifyWhatsBonusExists,
   verifyMessageDataType,
+  userCpfExists,
+  verifyUserByPhone,
 };
