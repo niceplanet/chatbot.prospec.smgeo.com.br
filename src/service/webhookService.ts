@@ -83,8 +83,9 @@ export async function startConversation(body: any) {
                 userByPhone?.id
               );
 
-              if (await verifyWhatsBonusExists(userByPhone?.id)) {
+              if (!(await verifyWhatsBonusExists(userByPhone?.id))) {
                 await createVouchersWhatsappBonus(userByPhone?.id);
+                id_voucher = 646;
                 await sendWhatsAppMessage(
                   senderId,
                   `Olá ${userByPhone?.name}, estou lhe concedendo 2 vales bônus para analisar suas propriedades ou propriedades de seu interesse!`
