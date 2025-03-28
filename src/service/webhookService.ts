@@ -53,7 +53,7 @@ export async function startConversation(body: any) {
             if (!(await verifyUserByPhone(senderId))) {
               await sendWhatsAppMessage(
                 senderId,
-                "Não consegui te localizar em nossos usuários. Mas não tem problema, por gentileza me informe seu nome e CPF abaixo para ganhar 2 vales bônus! Lembrando que você poderá utilizar-lo pelo aplicativo prospec ou por aqui mesmo."
+                "Não consegui te localizar em nossos usuários. Mas não tem problema, por gentileza me informe seu nome e CPF abaixo para ganhar 2 vales bônus! Lembrando que você poderá utilizá-lo pelo aplicativo prospec ou por aqui mesmo."
               );
               await sendWhatsAppMessage(
                 senderId,
